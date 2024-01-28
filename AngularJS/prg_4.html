@@ -1,6 +1,7 @@
 <!-- Write an Angular JS application that can calculate factorial and compute square based on given user input. -->
 
 <html ng-app="mathApp">
+
 <head>
   <title>AngularJS Math Operations</title>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
@@ -15,7 +16,7 @@
 
   <p ng-show="factorialResult !== undefined">Factorial: {{ factorialResult }}</p>
   <p ng-show="squareResult !== undefined">Square: {{ squareResult }}</p>
-  
+
   <script>
     var app = angular.module('mathApp', []);
     app.controller('mathController', function ($scope) {
@@ -47,8 +48,5 @@
     });
   </script>
 </body>
-</html>
 
-<!-- The factorial function is a recursive function that calculates the factorial of a given number.
-The base case checks if n is 0 or 1, in which case it returns 1.
-Otherwise, it recursively multiplies n with the factorial of n-1. -->
+</html>

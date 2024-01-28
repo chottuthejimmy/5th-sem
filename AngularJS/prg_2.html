@@ -23,22 +23,22 @@ Note: The default values of items may be included in the program.  -->
 
     <script>
         angular.module('shoppingApp', []).controller('shoppingCtrl', function ($scope) {
-                // Default values for shopping items
-                $scope.shoppingItems = ['Apples', 'Bananas', 'Bread', 'Milk'];
+            // Default values for shopping items
+            $scope.shoppingItems = ['Apples', 'Bananas', 'Bread', 'Milk'];
 
-                // Function to add a new item
-                $scope.addItem = function () {
-                    if ($scope.newItem) {
-                        $scope.shoppingItems.push($scope.newItem);
-                        $scope.newItem = ''; // Clear the input field after adding
-                    }
-                };
+            // Function to add a new item
+            $scope.addItem = function () {
+                if ($scope.newItem) {
+                    $scope.shoppingItems.push($scope.newItem);
+                    $scope.newItem = ''; // Clear the input field after adding
+                }
+            };
 
-                // Function to remove an item
-                $scope.removeItem = function (index) {
-                    $scope.shoppingItems.splice(index, 1);
-                };
-            });
+            // Function to remove an item
+            $scope.removeItem = function (index) {
+                $scope.shoppingItems.splice(index, 1);
+            };
+        });
     </script>
 </body>
 
