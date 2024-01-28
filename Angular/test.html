@@ -1,0 +1,42 @@
+<!-- Write an Angular JS application that can calculate factorial and compute square based on given user input. -->
+<html ng-app = "calApp">
+    <head>
+        <title>Angular Factorial</title>
+        <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    </head>
+    <body ng-controller = "calCtrl">
+        <h2>Math Operations</h2>
+        Enter a Number:
+        <input type="number", ng-model = "num" />
+        <button ng-click = "calfact()">Calculate Factorial</button>
+        <button ng-click = "calsqr()">Calculate Square</button>
+        <p ng-show = "fact !== undefined">Factorial: {{ fact }}</p>
+        <p ng-show = "sqr !== undefined">Square: {{ sqr }}</p>
+
+        <script>
+            var app = angular.module("calApp", []);
+            app.controller("calCtrl", function($scope){
+                $scope.calfact = function(){
+                    if($scope.num >= 0){
+                    $scope.fact = factorial($scope.num);
+                    }
+                    else{
+                    $scope.fact = "Enter a positive number";
+                    }
+                };
+                $scope.calsqr = function(){
+                    $scope.sqr = $scope.num * $scope.num;
+                };
+
+            function factorial(n){
+                if(n == 0 || n == 1){
+                    return 1;
+                }
+                else{
+                    return n * factorial(n-1);
+                }
+            }
+            });
+        </script>
+    </body>
+</html>
