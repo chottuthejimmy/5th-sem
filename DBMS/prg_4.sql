@@ -48,7 +48,10 @@ insert into COURSE values("CS101","A",4,4);
 insert into COURSE values("CS102","B",4,4);
 insert into COURSE values("CS103","C",4,4);
 
-insert into IAMARKS (USN, Subcode, SSID, Test1, Test2, Test3) values("1BI15CS101","CS101",1,10,20,30), ("1BI15CS101","CS102",1,40,50,60), ("1BI15CS101","CS103",1,70,80,90);
+insert into IAMARKS (USN, Subcode, SSID, Test1, Test2, Test3) values
+("1BI15CS101","CS101",1,10,20,30), 
+("1BI15CS101","CS102",1,40,50,60), 
+("1BI15CS101","CS103",1,70,80,90);
 ```
 
 -- 1. List all the student details studying in fourth semester ‘C’ section.
