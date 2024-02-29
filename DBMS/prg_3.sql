@@ -39,7 +39,7 @@ insert into ACTOR values(2,"B",'F');
 insert into ACTOR values(3,"C",'M');
 
 insert into DIRECTOR values(1,"Hitchcock",123);
-insert into DIRECTOR values(2,"Y",456);
+insert into DIRECTOR values(2,"Steven Spielberg",456);
 insert into DIRECTOR values(3,"Z",789);
 
 insert into MOVIES values(1,"P",2000,"English",1);
