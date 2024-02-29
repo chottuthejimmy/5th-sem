@@ -1,0 +1,37 @@
+<html ng-app="studentApp">
+  <head>
+    <title>Student Details Converter</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  </head>
+  <body ng-controller="studentController">
+    <h2>Student Details</h2>
+    <!-- Display the original student details -->
+    <h3>Original Details:</h3>
+    <ul ng-repeat="student in students">
+      <li>
+        <strong>Name:</strong> {{ student.firstName + ' ' + student.lastName }},
+        <strong>City:</strong> {{ student.city }}
+      </li>
+    </ul>
+    <!-- Display the student names in uppercase using filters -->
+    <h3>Details in Uppercase:</h3>
+    <ul ng-repeat="student in students">
+      <li>
+        <strong>Name:</strong> {{ (student.firstName + ' ' + student.lastName) |
+        uppercase }}, <strong>City:</strong> {{ student.city | uppercase }}
+      </li>
+    </ul>
+    <script>
+      var app = angular.module("studentApp", []);
+      app.controller("studentController", function ($scope) {
+        $scope.students = [
+          { firstName: "Raj", lastName: "Kumar", city: "New Delhi" },
+          { firstName: "Ram", lastName: "Sharma", city: "Mumbai" },
+          { firstName: "Sam", lastName: "Singh", city: "Bangalore" },
+          { firstName: "Isha", lastName: "Verma", city: "Kolkata" },
+          { firstName: "Sita", lastName: "Gupta", city: "Chennai" },
+        ];
+      });
+    </script>
+  </body>
+</html>
