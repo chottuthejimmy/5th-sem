@@ -1,3 +1,6 @@
+<!-- Create AngularJS application that allows users to maintain a collection of items. The application should display the current total number of items, and this count should automatically update as items are added or removed. Users should be able to add items to the collection and remove them as needed.
+Note: The default values for items may be included in the program. -->
+
 <html ng-app="itemApp">
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
   <body ng-controller="itemController">
@@ -15,12 +18,12 @@
     <script>
       var app = angular.module("itemApp", []);
       app.controller("itemController", function ($scope) {
-        $scope.items = ["Item 1", "Item 2", "Item 3"]; // Default items
+        $scope.items = ["Item 1", "Item 2", "Item 3"];
         $scope.newItem = "";
         $scope.addItem = function () {
           if ($scope.newItem) {
             $scope.items.push($scope.newItem);
-            $scope.newItem = ""; // Clear the input field
+            $scope.newItem = "";
           }
         };
         $scope.removeItem = function (index) {

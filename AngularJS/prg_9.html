@@ -1,8 +1,11 @@
+<!-- Create an AngularJS application that displays a list of employees and their salaries. Allow users to search for employees by name and salary. Note: Employee details may be included in the program. -->
+
 <html ng-app="employeeApp">
   <head>
     <title>AngularJS Employee Search</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
   </head>
+
   <body ng-controller="employeeController">
     <h2>Employee List</h2>
     Search by Name:
@@ -10,10 +13,7 @@
     Search by Salary:
     <input type="number" ng-model="searchSalary" />
     <ul>
-      <li
-        ng-repeat="employee in employees | filter: {name: searchName, salary:
-searchSalary}"
-      >
+      <li ng-repeat="employee in employees | filter: {name: searchName, salary: searchSalary}">
         {{ employee.name }} - Salary: Rs{{ employee.salary }}
       </li>
     </ul>
@@ -26,8 +26,6 @@ searchSalary}"
           { name: "sam", salary: 75000 },
           { name: "raj", salary: 55000 },
         ];
-        $scope.searchName = "";
-        $scope.searchSalary = "";
       });
     </script>
   </body>
