@@ -77,6 +77,3 @@ select FName from EMPLOYEE where not exists (select PNo from PROJECT where DNo =
 -- 5. For each department that has more than five employees, retrieve the department number and the number of its employees who are making more than Rs.6,00,000.
 
 select DNo, count(*) as "Number of Employees" from EMPLOYEE where Salary > 600000 group by DNo having count(*) > 5;
-
-
-

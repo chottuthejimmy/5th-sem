@@ -56,11 +56,13 @@ select Name, count(*) from SALESMAN natural join CUSTOMER group by Salesman_id h
 
 -- 3. List all the salesman and indicate those who have and don’t have customers in their cities (Use UNION operation.)
 
-(select S.Salesman_id, Name, Cust_Name from SALESMAN S, customer where S.city = customer.city) union (select Salesman_id, Name, 'NO MATCH' from SALESMAN where NOT city = any (select City from CUSTOMER)) order by 2 desc;
+(select S.Salesman_id, Name, Cust_Name from SALESMAN S, customer C where S.city = C.city)
+ union
+ (select Salesman_id, Name, 'NO MATCH' from SALESMAN where NOT city = any (select City from CUSTOMER)) order by 2 desc;
 
 -- 4. Create a view that finds the salesman who has the customer with the highest order of a day.
 
-create view V as select Salesman_id, Name, Ord_Date from SALESMAN natural join ORDERS natural join CUSTOMER where Purchase_Amt = (select max(Purchase_Amt) group by Ord_Date);
+create view V as (select Salesman_id, Name, Ord_Date from SALESMAN natural join ORDERS natural join CUSTOMER where Purchase_Amt = (select max(Purchase_Amt) group by Ord_Date));
 
 -- 5. Demonstrate the DELETE operation by removing salesman with id 1000. All his orders must also be deleted.
 

@@ -103,8 +103,8 @@ delete from book where book_id = 1;
 
 -- Partition the BOOK table based on year of publication. Demonstrate its working with a simple query
 
-create view book_2010 as select * from book where pub_year = 2010;
+create view book_2010 as (select pub_year from book group by pub_year);
 
 -- Create a view of all books and its number of copies that are currently available in the Library
 
-create view available_books as select book_id, title, no_of_copies from book natural join book_copies where no_of_copies > 0;
+create view available_books as (select book_id, title, no_of_copies from book natural join book_copies);

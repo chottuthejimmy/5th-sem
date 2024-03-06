@@ -10,19 +10,19 @@
 
 -- RATING(Mov_id, Rev_Stars)
 
-creat table ACTOR(Act_id int primary key, Act_Name varchar(20), Gender char(1));
+create table ACTOR(Act_id int primary key, Act_Name varchar(20), Gender char(1));
 
-creat table DIRECTOR(Dir_id int primary key, Dir_Name varchar(20), Dir_Phone real);
+create table DIRECTOR(Dir_id int primary key, Dir_Name varchar(20), Dir_Phone real);
 
-creat table MOVIES(Mov_id int primary key, Mov_Title varchar(20), Mov_Year int, Mov_Lang char(20), Dir_id int, 
+create table MOVIES(Mov_id int primary key, Mov_Title varchar(20), Mov_Year int, Mov_Lang char(20), Dir_id int, 
 foreign key(Dir_id) references DIRECTOR(Dir_id));
 
-creat table MOVIE_CAST(Act_id int, Mov_id int, Role char(20),
+create table MOVIE_CAST(Act_id int, Mov_id int, Role char(20),
 primary key(Act_id, Mov_id),
 foreign key(Act_id) references ACTOR(Act_id),
 foreign key(Mov_id) references MOVIES(Mov_id));
 
-creat table RATING(Mov_id int primary key, Rev_Stars int,
+create table RATING(Mov_id int primary key, Rev_Stars int,
 foreign key(Mov_id) references MOVIES(Mov_id));
 
 ```
