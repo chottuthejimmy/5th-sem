@@ -1,0 +1,130 @@
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #f8f8f8;
+    padding: 10px 0;
+    text-align: center;
+}
+.cart-image {
+    width: 200px; /* Make the image take up the full width of the flex item */
+    height: 150px; /* Make the image take up the full height of the flex item */
+    max-width: 100%; /* Add this property to ensure the image does not exceed its container's width */
+    object-fit: cover; /* Cover the container while maintaining aspect ratio */
+    margin-bottom: 10px; /* Add space below the image */
+}
+
+.book-image{
+    width: 100%;
+    height: auto;
+    max-width:fit-content; /* Adjust as needed */
+    display: block;
+    margin-bottom: 10px;
+}
+.book-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+    flex: 1; /* Take up the remaining space */
+    padding: 20px;
+    margin-right: 20px; /* Add some space between the book list and the cart */
+}
+
+.book-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px;
+    width: 220px;
+   
+}
+
+button {
+    background-color: #2d5ad5;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+
+.cart {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    width: 300px; /* Set a fixed width for the cart */
+    position: sticky; /* Make the cart stick to the top when scrolling */
+    top: 20px; /* Distance from the top of the viewport */
+
+}
+
+.cart h2 {
+    margin-top: 0;
+}
+
+.cart ul {
+    list-style: none;
+    padding: 0;
+    display: flex; /* Use flexbox to display items in a row */
+    flex-wrap: wrap; /* Allow items to wrap to the next line if needed */
+    align-items: center; /* Align items vertically */
+    justify-content: space-around; /* Distribute space around items */
+}
+
+.cart li {
+    padding: 5px;
+    border: 1px solid #eee; /* Add a border to each item */
+    margin: 2px; /* Add some space between items */
+    flex-basis: 80px; /* Set the basis for each item, subtracting margin */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.cart-image {
+    width: 200px; /* Make the image take up the full width of the flex item */
+    height: 150px; /* Make the image take up the full height of the flex item */
+    object-fit: cover; /* Cover the container while maintaining aspect ratio */
+    margin-bottom: 10px; /* Add space below the image */
+}
+.remove-button {
+    background-color: #d05752;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.remove-button:hover {
+    opacity: 0.8;
+}
+.remove-button-container {
+    display: block; /* This will make the button start on a new line */
+    text-align: left; /* Optional: Aligns the button to the right */
+    margin-top: 10px; /* Optional: Adds some space above the button */
+}
+.content {
+    display: flex;
+    justify-content: space-between;
+}
+/* Add styles for the checkout button */
+.checkout-button {
+    background-color: #337ab7;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+    margin-left: auto; /* Push to the right */
+}
+
+.checkout-button:hover {
+    opacity: 0.8;
+}

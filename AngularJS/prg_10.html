@@ -19,7 +19,6 @@ Note: The default values for items may be included in the program. -->
       var app = angular.module("itemApp", []);
       app.controller("itemController", function ($scope) {
         $scope.items = ["Item 1", "Item 2", "Item 3"];
-        $scope.newItem = "";
         $scope.addItem = function () {
           if ($scope.newItem) {
             $scope.items.push($scope.newItem);
