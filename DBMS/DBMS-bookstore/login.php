@@ -27,12 +27,11 @@ if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $_SESSION['user_id'] = $row['id'];
     $_SESSION['username'] = $login_username;
-    // Redirect user to dashboard.php or any other page
-    header("Location: index.html");
-    exit();
+    // Send success response
+    echo json_encode(["success" => true]);
 } else {
     // Invalid credentials
-    echo "Invalid username or password";
+    echo json_encode(["success" => false, "message" => "Invalid username or password"]);
 }
 
 $conn->close();
