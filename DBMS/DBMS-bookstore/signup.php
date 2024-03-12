@@ -17,21 +17,33 @@ if ($conn->connect_error) {
 $signup_username = $conn->real_escape_string($_POST['signup_username']);
 $signup_password = $conn->real_escape_string($_POST['signup_password']);
 
-// SQL query to insert new user into the database using prepared statement
-$sql = "INSERT INTO users (username, password) VALUES (?, ?)";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("ss", $signup_username, $signup_password);
+// Check if the username already exists
+$check_sql = "SELECT * FROM users WHERE username = ?";
+$check_stmt = $conn->prepare($check_sql);
+$check_stmt->bind_param("s", $signup_username);
+$check_stmt->execute();
+$check_result = $check_stmt->get_result();
 
-if ($stmt->execute()) {
-    echo "Sign up successful";
-
-     // Redirect back to the form page after 3 seconds
-     echo '<script>window.location.href = "login.html";</script>';
-     exit; // Exit to prevent further output
+if ($check_result->num_rows > 0) {
+    // Username already exists
+    echo json_encode(["success" => false, "message" => "Username already exists"]);
 } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+    // SQL query to insert new user into the database using prepared statement
+    $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ss", $signup_username, $signup_password);
+
+    if ($stmt->execute()) {
+        // Sign up successful
+        echo json_encode(["success" => true, "message" => "Sign up successful"]);
+    } else {
+        // Error occurred
+        echo json_encode(["success" => false, "message" => "Error: " . $stmt->error]);
+    }
+
+    $stmt->close();
 }
 
-$stmt->close();
+$check_stmt->close();
 $conn->close();
 ?>
