@@ -10,13 +10,6 @@
 
 -- WORKS_ON(SSN, PNo, Hours)
 
--- Write SQL queries to
--- 1. Make a list of all project numbers for projects that involve an employee whose last name is ‘Scott’, either as a worker or as a manager of the department that controls the project.
--- Show the resulting salaries if every employee working on the ‘IoT’ project is given a 10 percent raise.
--- 3. Find the sum of the salaries of all employees of the ‘Accounts’ department, as well as the maximum salary, the minimum salary, and the average salary in this department
--- 4. Retrieve the name of each employee who works on all the projects controlled by department number 5 (use NOT EXISTS operator).
--- 5. For each department that has more than five employees, retrieve the department number and the number of its employees who are making more than Rs.6,00,000.
-
 create table DEPARTMENT(DNo int primary key, DName varchar(20), MgrStartDate date);
 
 create table EMPLOYEE(SSN int primary key, FName varchar(20), LName varchar(20), Address varchar(20), Sex char(1), Salary real, SuperSSN int, DNo int, foreign key(DNo) references DEPARTMENT(DNo), foreign key(SuperSSN) references EMPLOYEE(SSN));
@@ -30,7 +23,7 @@ create table PROJECT(PNo int primary key, PName varchar(20), PLocation varchar(2
 create table WORKS_ON(SSN int, PNo int, Hours int, primary key(SSN, PNo), foreign key(SSN) references EMPLOYEE(SSN), foreign key(PNo) references PROJECT(PNo));
 
 ```
- insert into EMPLOYEE(SSN, FName, LName Address, Sex, Salary) values
+ insert into EMPLOYEE(SSN, FName, LName, Address, Sex, Salary) values
     (1,"A","Scott","C",'M',1000),
     (2,"D","E","F",'F',2000),
     (3,"G","H","I",'M',3000);
