@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 21, 2022 at 10:46 AM
+-- Generation Time: March 11, 2024 at 10:46 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.5
 
@@ -27,15 +27,6 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
--- Dumping data for table `admin`
---
-
-INSERT INTO `admin` (`name`, `pass`) VALUES
-('admin', 'f865b53623b121fd34ee5426c792e5c33af8c227');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `books`
 --
 
@@ -49,6 +40,127 @@ CREATE TABLE `books` (
   `publisherid` int(10) UNSIGNED NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+--
+-- Table structure for table `customers`
+--
+
+CREATE TABLE `customers` (
+  `customerid` int(10) UNSIGNED NOT NULL,
+  `name` varchar(60) COLLATE latin1_general_ci NOT NULL,
+  `address` varchar(80) COLLATE latin1_general_ci NOT NULL,
+  `city` varchar(30) COLLATE latin1_general_ci NOT NULL,
+  `zip_code` varchar(10) COLLATE latin1_general_ci NOT NULL,
+  `country` varchar(60) COLLATE latin1_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `orderid` int(10) UNSIGNED NOT NULL,
+  `customerid` int(10) UNSIGNED NOT NULL,
+  `amount` decimal(6,2) DEFAULT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `ship_name` char(60) COLLATE latin1_general_ci NOT NULL,
+  `ship_address` char(80) COLLATE latin1_general_ci NOT NULL,
+  `ship_city` char(30) COLLATE latin1_general_ci NOT NULL,
+  `ship_zip_code` char(10) COLLATE latin1_general_ci NOT NULL,
+  `ship_country` char(20) COLLATE latin1_general_ci NOT NULL,
+  `status` enum('in transit','delivered') COLLATE latin1_general_ci NOT NULL DEFAULT 'in transit'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+--
+-- Table structure for table `order_items`
+--
+
+CREATE TABLE `order_items` (
+  `orderid` int(10) UNSIGNED NOT NULL,
+  `book_isbn` varchar(20) COLLATE latin1_general_ci NOT NULL,
+  `item_price` decimal(6,2) NOT NULL,
+  `quantity` tinyint(3) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+--
+-- Table structure for table `publisher`
+--
+
+CREATE TABLE `publisher` (
+  `publisherid` int(10) UNSIGNED NOT NULL,
+  `publisher_name` varchar(60) COLLATE latin1_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+-- Trigger for updating order amounts when book prices change
+-- 1. Create a trigger that updates the order amount when a book price changes
+-- 2. The trigger should update the item price in the order_items table and the total amount in the orders table
+-- 3. The trigger should only update orders that are 'in transit' and contain the updated book
+-- 4. The trigger should calculate the price difference per book and the total price difference for the order
+-- 5. The trigger should use a cursor to loop through all orders that are 'in transit' and contain the updated book
+-- 6. The trigger should update the item price in the order_items table and the total amount in the orders table for each order
+-- 7. The trigger should be executed before the update operation on the books table
+
+DELIMITER //
+
+CREATE TRIGGER UpdateOrderAmountBeforeBookPriceChange
+BEFORE UPDATE ON books
+FOR EACH ROW
+BEGIN
+    DECLARE priceDifference DECIMAL(10,2);
+    DECLARE totalDifference DECIMAL(10,2);
+    DECLARE orderQuantity INT;
+    DECLARE orderIDVar INT;
+    DECLARE quantityVar INT;
+    DECLARE done INT DEFAULT FALSE;
+    
+    DECLARE transitOrder CURSOR FOR
+        SELECT order_items.orderid, order_items.quantity
+        FROM order_items
+        INNER JOIN orders ON orders.orderid = order_items.orderid
+        WHERE order_items.book_isbn = OLD.book_isbn AND orders.status = 'in transit';
+
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+    -- Calculate the price difference per book
+    SET priceDifference = NEW.book_price - OLD.book_price;
+
+    -- Open the cursor
+    OPEN transitOrder;
+
+    -- Loop through all orders that are 'in transit' and contain the updated book
+    read_loop: LOOP
+        FETCH transitOrder INTO orderIDVar, quantityVar;
+        IF done THEN
+            LEAVE read_loop;
+        END IF;
+
+        -- Calculate the total price difference
+        SET totalDifference = priceDifference * quantityVar;
+
+        -- Update the item price in the order_items table
+        UPDATE order_items
+        SET item_price = NEW.book_price
+        WHERE orderid = orderIDVar AND book_isbn = OLD.book_isbn;
+
+        -- Update the total amount in the orders table
+        UPDATE orders
+        SET amount = amount + totalDifference
+        WHERE orderid = orderIDVar;
+    END LOOP;
+
+    -- Close the cursor
+    CLOSE transitOrder;
+END;
+
+//
+DELIMITER ;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`name`, `pass`) VALUES
+('admin', 'f865b53623b121fd34ee5426c792e5c33af8c227');
 
 --
 -- Dumping data for table `books`
@@ -66,21 +178,6 @@ INSERT INTO `books` (`book_isbn`, `book_title`, `book_author`, `book_image`, `bo
 ('978-1-484216-40-8', 'Android Studio New Media Fundamentals', 'Wallace Jackson', 'android_studio.jpg', 'Android Studio New Media Fundamentals is a new media primer covering concepts central to multimedia production for Android including digital imagery, digital audio, digital video, digital illustration and 3D, using open source software packages such as GIMP, Audacity, Blender, and Inkscape. These professional software packages are used for this book because they are free for commercial use. The book builds on the foundational concepts of raster, vector, and waveform (audio), and gets more advanced as chapters progress, covering what new media assets are best for use with Android Studio as well as key factors regarding the data footprint optimization work process and why new media content and new media data optimization is so important.', '20.00', 4, '2022-06-21 16:44:25'),
 ('978-1-484217-26-9', 'C++ 14 Quick Syntax Reference, 2nd Edition', '	Mikael Olsson', 'c_14_quick.jpg', 'This updated handy quick C++ 14 guide is a condensed code and syntax reference based on the newly updated C++ 14 release of the popular programming language. It presents the essential C++ syntax in a well-organized format that can be used as a handy reference.\r\n\r\nYou won\'t find any technical jargon, bloated samples, drawn out history lessons, or witty stories in this book. What you will find is a language reference that is concise, to the point and highly accessible. The book is packed with useful information and is a must-have for any C++ programmer.\r\n\r\nIn the C++ 14 Quick Syntax Reference, Second Edition, you will find a concise reference to the C++ 14 language syntax. It has short, simple, and focused code examples. This book includes a well laid out table of contents and a comprehensive index allowing for easy review.', '20.00', 4, '2022-06-21 16:44:25');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `customers`
---
-
-CREATE TABLE `customers` (
-  `customerid` int(10) UNSIGNED NOT NULL,
-  `name` varchar(60) COLLATE latin1_general_ci NOT NULL,
-  `address` varchar(80) COLLATE latin1_general_ci NOT NULL,
-  `city` varchar(30) COLLATE latin1_general_ci NOT NULL,
-  `zip_code` varchar(10) COLLATE latin1_general_ci NOT NULL,
-  `country` varchar(60) COLLATE latin1_general_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-
 --
 -- Dumping data for table `customers`
 --
@@ -94,24 +191,6 @@ INSERT INTO `customers` (`customerid`, `name`, `address`, `city`, `zip_code`, `c
 (6, 'Mark Cooper', 'Here City There Province, 2306', 'Here', '2306', 'Philippines'),
 (7, 'Mark Cooper', 'Here City There Province, 2306', 'Sample City', '2306', 'Philippines'),
 (8, 'Samantha Jane Miller', 'Sample Street', 'Sample City', '2306', 'Sampple');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `orders`
---
-
-CREATE TABLE `orders` (
-  `orderid` int(10) UNSIGNED NOT NULL,
-  `customerid` int(10) UNSIGNED NOT NULL,
-  `amount` decimal(6,2) DEFAULT NULL,
-  `date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `ship_name` char(60) COLLATE latin1_general_ci NOT NULL,
-  `ship_address` char(80) COLLATE latin1_general_ci NOT NULL,
-  `ship_city` char(30) COLLATE latin1_general_ci NOT NULL,
-  `ship_zip_code` char(10) COLLATE latin1_general_ci NOT NULL,
-  `ship_country` char(20) COLLATE latin1_general_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
 -- Dumping data for table `orders`
@@ -127,19 +206,6 @@ INSERT INTO `orders` (`orderid`, `customerid`, `amount`, `date`, `ship_name`, `s
 (7, 6, '20.00', '2022-06-21 01:38:20', 'Mark Cooper', 'Here City There Province, 2306', 'Here', '2306', 'Philippines'),
 (8, 7, '20.00', '2022-06-21 01:40:28', 'Mark Cooper', 'Here City There Province, 2306', 'Sample City', '2306', 'Philippines'),
 (9, 8, '80.00', '2022-06-21 01:42:56', 'Samantha Jane Miller', 'Sample Street', 'Sample City', '2306', 'Sample');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `order_items`
---
-
-CREATE TABLE `order_items` (
-  `orderid` int(10) UNSIGNED NOT NULL,
-  `book_isbn` varchar(20) COLLATE latin1_general_ci NOT NULL,
-  `item_price` decimal(6,2) NOT NULL,
-  `quantity` tinyint(3) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
 -- Dumping data for table `order_items`
@@ -163,28 +229,17 @@ INSERT INTO `order_items` (`orderid`, `book_isbn`, `item_price`, `quantity`) VAL
 (8, '978-1-1180-2669-4', '20.00', 1),
 (9, '978-1-44937-019-0', '20.00', 4);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `publisher`
---
-
-CREATE TABLE `publisher` (
-  `publisherid` int(10) UNSIGNED NOT NULL,
-  `publisher_name` varchar(60) COLLATE latin1_general_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-
 --
 -- Dumping data for table `publisher`
 --
 
 INSERT INTO `publisher` (`publisherid`, `publisher_name`) VALUES
-(1, 'Publisher 1'),
-(2, 'Publisher 2'),
-(3, 'Publisher 3'),
-(4, 'Publisher 4'),
-(5, 'Publisher 5'),
-(6, 'Publisher 6');
+(1, 'Penumbra Publishing'),
+(2, 'Sybex'),
+(3, 'Wiley'),
+(4, 'Apress'),
+(5, 'O Reilly Media'),
+(6, 'Apex Publications');
 
 --
 -- Indexes for dumped tables
@@ -219,10 +274,6 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `publisher`
   ADD PRIMARY KEY (`publisherid`);
-
---
--- AUTO_INCREMENT for dumped tables
---
 
 --
 -- AUTO_INCREMENT for table `customers`
