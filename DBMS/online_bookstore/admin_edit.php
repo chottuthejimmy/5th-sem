@@ -43,7 +43,7 @@
 		if($result){
 			$_SESSION['book_success'] = "Book Details has been updated successfully";
 			header("Location: admin_book.php");
-		} else {
+		} else { 
 			$err =  "Can't update data " . mysqli_error($conn);
 		}
 	}

@@ -1,7 +1,5 @@
 <?php
-/**
- * this class is  coded  by Ahmed  Embaby in  24  SEP  2019
- */
+
 spl_autoload_register(function ($class){
     $arr=[__DIR__.'/../../models/goods',
         __DIR__.'/../../models/orders',

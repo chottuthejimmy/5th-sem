@@ -42,7 +42,7 @@
 
 	foreach($_SESSION['cart'] as $isbn => $qty){
 		$bookprice = getbookprice($isbn);
-		$query = "INSERT INTO order_items VALUES 
+		$query = "INSERT INTO order_items (orderid, book_isbn, item_price, quantity) VALUES 
 		('$orderid', '$isbn', '$bookprice', '$qty')";
 		$result = mysqli_query($conn, $query);
 		if(!$result){

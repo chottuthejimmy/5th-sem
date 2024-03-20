@@ -79,7 +79,7 @@
 						<tr>
 							<td><?php echo $book['book_title'] . " by " . $book['book_author']; ?></td>
 							<td><?php echo "$" . $book['book_price']; ?></td>
-							<td><input type="text" value="<?php echo $qty; ?>" size="2" name="<?php echo $isbn; ?>"></td>
+							<td><input type="number" value="<?php echo $qty; ?>" style="width: 60px;" name="<?php echo $isbn; ?>" min="0"></td>
 							<td><?php echo "$" . $qty * $book['book_price']; ?></td>
 						</tr>
 						<?php } ?>

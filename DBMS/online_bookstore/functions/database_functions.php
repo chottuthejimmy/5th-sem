@@ -43,9 +43,11 @@
 		return $row['orderid'];
 	}
 
+
 	function insertIntoOrder($conn, $customerid, $total_price, $date, $ship_name, $ship_address, $ship_city, $ship_zip_code, $ship_country){
-		$query = "INSERT INTO orders VALUES 
-		('', '" . $customerid . "', '" . $total_price . "', '" . $date . "', '" . $ship_name . "', '" . $ship_address . "', '" . $ship_city . "', '" . $ship_zip_code . "', '" . $ship_country . "')";
+		// Be sure to include 'status' in your column list and 'in transit' or 'delivered' as the corresponding value
+		$query = "INSERT INTO orders (customerid, amount, date, ship_name, ship_address, ship_city, ship_zip_code, ship_country, status) VALUES 
+		('$customerid', '$total_price', '$date', '$ship_name', '$ship_address', '$ship_city', '$ship_zip_code', '$ship_country', 'in transit')";
 		$result = mysqli_query($conn, $query);
 		if(!$result){
 			echo "Insert orders failed " . mysqli_error($conn);
