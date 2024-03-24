@@ -12,14 +12,11 @@
 
 -- LIBRARY_PROGRAMME(Programme_id, Programme_Name, Address)
 
-
-
 create table PUBLISHER(
     Name varchar(20) primary key,
     Address varchar(20),
     Phone real
 );
-
 
 create table BOOK(
     Book_id int primary key,
@@ -62,7 +59,6 @@ create table BOOK_LENDING(
     foreign key (Programme_id) references LIBRARY_PROGRAMME(Programme_id) on delete cascade
 );
 
-
 ```
 INSERT INTO PUBLISHER VALUES("PEARSON","Bombay","8797546021");
 INSERT INTO PUBLISHER VALUES("MCGRAW HILL","Delhi","8797546021");
@@ -89,9 +85,9 @@ INSERT INTO BOOK_LENDING VALUES(2,2,2,"2017-02-01","2017-02-10");
 INSERT INTO BOOK_LENDING VALUES(3,3,3,"2017-08-01","2017-09-10");
 ```
 
--- Retrieve details of all books in the library_ id, title, name of publisher, authors, number of copies in each branch, etc.
+-- Retrieve details of all books in the library - id, title, name of publisher, authors, number of copies in each branch, etc.
 
-select publisher_name, title, author_name, no_of_copies from book natural join book_authors natural join book_copies;
+select book_id, title, publisher_name,author_name, no_of_copies, programme_id from book natural join book_authors natural join book_copies natural join library_programme;
 
 -- Get the particulars of borrowers who have borrowed more than 3 books, but from Jan 2017 to Jun 2017.
 
@@ -103,7 +99,9 @@ delete from book where book_id = 1;
 
 -- Partition the BOOK table based on year of publication. Demonstrate its working with a simple query
 
-create view book_2010 as (select pub_year from book group by pub_year);
+create view year as select Pub_Year from book;
+
+select * from year ;
 
 -- Create a view of all books and its number of copies that are currently available in the Library
 

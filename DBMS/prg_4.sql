@@ -10,15 +10,43 @@
 
 -- IAMARKS(USN, Subcode, SSID, Test1, Test2, Test3, FinalIA)
 
-Create table STUDENT(USN varchar(20) primary key, SName varchar(20), Address varchar(20), Phone real, Gender char(1));
+Create table STUDENT(
+    USN varchar(20) primary key, 
+    SName varchar(20), 
+    Address varchar(20), 
+    Phone real, 
+    Gender char(1));
 
-Create table SEMSEC(SSID int primary key, Sem int, Sec char(1));
+Create table SEMSEC(
+    SSID int primary key, 
+    Sem int, 
+    Sec char(1));
 
-Create table CLASS(USN varchar(20), SSID int, primary key(USN, SSID), foreign key(USN) references STUDENT(USN), foreign key(SSID) references SEMSEC(SSID));
+Create table CLASS(
+    USN varchar(20), 
+    SSID int, 
+    primary key(USN, SSID), 
+    foreign key(USN) references STUDENT(USN), 
+    foreign key(SSID) references SEMSEC(SSID));
 
-Create table COURSE(Subcode varchar(10) primary key, Title varchar(20), Sem int, Credits int);
+Create table COURSE(
+    Subcode varchar(10) primary key, 
+    Title varchar(20), 
+    Sem int, 
+    Credits int);
 
-Create table IAMARKS(USN varchar(20), Subcode varchar(10), SSID int, Test1 int, Test2 int, Test3 int, FinalIA int, primary key(USN, Subcode, SSID), foreign key(USN) references STUDENT(USN), foreign key(Subcode) references COURSE(Subcode), foreign key(SSID) references SEMSEC(SSID));
+Create table IAMARKS(
+    USN varchar(20), 
+    Subcode varchar(10), 
+    SSID int, 
+    Test1 int, 
+    Test2 int, 
+    Test3 int, 
+    FinalIA int, 
+    primary key(USN, Subcode, SSID),
+    foreign key(USN) references STUDENT(USN), 
+    foreign key(Subcode) references COURSE(Subcode), 
+    foreign key(SSID) references SEMSEC(SSID));
 
 ```
 insert into STUDENT values("1BI15CS101","A","B",123,"M");

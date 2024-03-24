@@ -10,17 +10,44 @@
 
 -- WORKS_ON(SSN, PNo, Hours)
 
-create table DEPARTMENT(DNo int primary key, DName varchar(20), MgrStartDate date);
+create table DEPARTMENT(
+    DNo int primary key, 
+    DName varchar(20), 
+    MgrStartDate date);
 
-create table EMPLOYEE(SSN int primary key, FName varchar(20), LName varchar(20), Address varchar(20), Sex char(1), Salary real, SuperSSN int, DNo int, foreign key(DNo) references DEPARTMENT(DNo), foreign key(SuperSSN) references EMPLOYEE(SSN));
+create table EMPLOYEE(
+    SSN int primary key, 
+    FName varchar(20), 
+    LName varchar(20), 
+    Address varchar(20), 
+    Sex char(1), 
+    Salary real, 
+    SuperSSN int, 
+    DNo int, 
+    foreign key(DNo) references DEPARTMENT(DNo), 
+    foreign key(SuperSSN) references EMPLOYEE(SSN));
 
 alter table DEPARTMENT add MgrSSN varchar(10) references EMPLOYEE(SSN);
 
-create table DLOCATION(DNo int, DLoc varchar(20), primary key(DNo, DLoc), foreign key(DNo) references DEPARTMENT(DNo));
+create table DLOCATION(
+    DNo int, 
+    DLoc varchar(20), 
+    primary key(DNo, DLoc), 
+    foreign key(DNo) references DEPARTMENT(DNo));
 
-create table PROJECT(PNo int primary key, PName varchar(20), PLocation varchar(20), DNo int, foreign key(DNo) references DEPARTMENT(DNo));
+create table PROJECT(
+    PNo int primary key, 
+    PName varchar(20), 
+    PLocation varchar(20), 
+    DNo int, 
+    foreign key(DNo) references DEPARTMENT(DNo));
 
-create table WORKS_ON(SSN int, PNo int, Hours int, primary key(SSN, PNo), foreign key(SSN) references EMPLOYEE(SSN), foreign key(PNo) references PROJECT(PNo));
+create table WORKS_ON(
+    SSN int, PNo int, 
+    Hours int, 
+    primary key(SSN, PNo), 
+    foreign key(SSN) references EMPLOYEE(SSN), 
+    foreign key(PNo) references PROJECT(PNo));
 
 ```
  insert into EMPLOYEE(SSN, FName, LName, Address, Sex, Salary) values
