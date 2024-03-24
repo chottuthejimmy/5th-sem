@@ -22,7 +22,7 @@ primary key(Act_id, Mov_id),
 foreign key(Act_id) references ACTOR(Act_id),
 foreign key(Mov_id) references MOVIES(Mov_id));
 
-create table RATING(Mov_id int primary key, Rev_Stars int,
+create table RATING(Mov_id int not null, Rev_Stars int,
 foreign key(Mov_id) references MOVIES(Mov_id));
 
 ```
@@ -34,15 +34,16 @@ insert into DIRECTOR values(1,"Hitchcock",123);
 insert into DIRECTOR values(2,"Steven Spielberg",456);
 insert into DIRECTOR values(3,"Z",789);
 
-insert into MOVIES values(1,"P",2000,"English",1);
-insert into MOVIES values(2,"Q",2001,"Hindi",2);
+insert into MOVIES values(1,"P",1999,"English",1);
+insert into MOVIES values(2,"Q",2017,"Hindi",2);
 insert into MOVIES values(3,"R",2002,"English",3);
 
 insert into MOVIE_CAST values(1,1,"Lead");
-insert into MOVIE_CAST values(2,2,"Supporting");
+insert into MOVIE_CAST values(1,2,"Supporting");
 insert into MOVIE_CAST values(3,3,"Lead");
 
 insert into RATING values(1,5);
+insert into RATING values(1,4);
 insert into RATING values(2,4);
 insert into RATING values(3,3);
 ```
