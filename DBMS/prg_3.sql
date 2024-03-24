@@ -74,8 +74,6 @@ select distinct Mov_Title from MOVIES m, MOVIE_CAST mc where m.Mov_id = mc.Mov_i
 
 -- 3. List all actors who acted in a movie before 2000 and also in a movie after 2015(use JOIN operation).
 
-select Act_Name from ACTOR natural join MOVIE_CAST natural join MOVIES where Mov_Year not between 2000 and 2015;
-
 SELECT DISTINCT A.Act_id, A.Act_Name
 FROM ACTOR A
 JOIN MOVIE_CAST MC1 ON A.Act_id = MC1.Act_id

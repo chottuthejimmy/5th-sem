@@ -58,7 +58,7 @@ select Name, count(*) from SALESMAN natural join CUSTOMER group by Salesman_id h
 
 (select S.Salesman_id, Name, Cust_Name from SALESMAN S, customer C where S.city = C.city)
  union
- (select Salesman_id, Name, 'NO MATCH' from SALESMAN where NOT city = any (select City from CUSTOMER));
+(select Salesman_id, Name, 'NO MATCH' from SALESMAN where NOT city = any (select City from CUSTOMER));
 
 -- 4. Create a view that finds the salesman who has the customer with the highest order of a day.
 
