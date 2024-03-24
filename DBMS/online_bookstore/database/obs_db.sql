@@ -91,6 +91,15 @@ CREATE TABLE `publisher` (
   `publisher_name` varchar(60) COLLATE latin1_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
+CREATE TABLE `payment_details` (
+  `customerid` int(10) UNSIGNED NOT NULL,
+  `Type` VARCHAR(10),
+  `Number` VARCHAR(20),
+  `CVV` VARCHAR(5),
+  `ExpireDate` VARCHAR(5),
+  `Name` VARCHAR(50)
+);
+
 -- Trigger for updating order amounts when book prices change
 -- 1. Create a trigger that updates the order amount when a book price changes
 -- 2. The trigger should update the item price in the order_items table and the total amount in the orders table
