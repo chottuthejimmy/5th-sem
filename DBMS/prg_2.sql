@@ -42,6 +42,7 @@ insert into CUSTOMER values(1,"X","Bangalore",1,1);
 insert into CUSTOMER values(4,"W","Bangalore",2,1);
 insert into CUSTOMER values(2,"Y","Delhi",2,2); 
 insert into CUSTOMER values(3,"Z","Mumbai",3,3);
+
 insert into ORDERS values(1,1000,"2020-01-01",1000,1);
 insert into ORDERS values(2,2000,"2020-01-02",2,2);
 insert into ORDERS values(3,3000,"2020-01-03",3,3);

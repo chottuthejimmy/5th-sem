@@ -87,7 +87,7 @@ INSERT INTO BOOK_LENDING VALUES(3,3,3,"2017-08-01","2017-09-10");
 
 -- Retrieve details of all books in the library - id, title, name of publisher, authors, number of copies in each branch, etc.
 
-select book_id, title, publisher_name,author_name, no_of_copies, programme_id from book natural join book_authors natural join book_copies natural join library_programme;
+select book_id, title, publisher_name, author_name, no_of_copies, programme_id from book natural join book_authors natural join book_copies natural join library_programme;
 
 -- Get the particulars of borrowers who have borrowed more than 3 books, but from Jan 2017 to Jun 2017.
 

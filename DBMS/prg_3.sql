@@ -37,7 +37,7 @@ create table MOVIE_CAST(
     foreign key(Mov_id) references MOVIES(Mov_id));
 
 create table RATING(
-    Mov_id int not null, 
+    Mov_id int not null,
     Rev_Stars int,
     foreign key(Mov_id) references MOVIES(Mov_id));
 
