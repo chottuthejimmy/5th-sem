@@ -9,7 +9,7 @@ Note: The default values for items may be included in the program. -->
     <input type="text" ng-model="newItem" />
     <button ng-click="addItem()">Add Item</button>
     <ul>
-      <li ng-repeat="item in items track by $index">
+      <li ng-repeat="item in items">
         {{ item }}
         <button ng-click="removeItem($index)">Remove</button>
       </li>
