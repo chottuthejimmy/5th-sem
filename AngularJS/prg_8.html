@@ -1,38 +1,39 @@
 <!-- Develop AngularJS program to create a login form, with validation for the username and password fields. -->
 
 <html ng-app="loginApp">
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 
-  <body ng-controller="loginController">
-    <h1>Login Form</h1>
-    <form ng-submit="login()" name="loginForm">
-      Username
-      <input type="text" ng-model="username" required />
-      <br />
-      Password
-      <input type="password" ng-model="password" required />
-      <br />
-      <button type="submit" ng-disabled="loginForm.$invalid">Login</button>
-    </form>
-    <script>
-      var app = angular.module("loginApp", []);
-      app.controller("loginController", function ($scope) {
-        $scope.attempts = 0;
-        $scope.login = function () {
-          if ($scope.username == "ram" && $scope.password == "ram") {
-            alert("Login successful");
-          } else {
-            $scope.attempts++;
-            alert(
-              "Login failed. Invalid username or password. Attempts left: " +
-                (3 - $scope.attempts)
-            );
-            if ($scope.attempts >= 3) {
-              alert("Too many failed attempts. Your account is locked.");
-            }
-          }
-        };
-      });
-    </script>
-  </body>
+<body ng-controller="loginController">
+  <h1>Login Form</h1>
+  <form ng-submit="login()" name="loginForm">
+    Username:
+    <input type="text" ng-model="username" required /> &nbsp;
+    Password:
+    <input type="password" ng-model="password" required /> &nbsp;
+    <button type="submit" ng-disabled="loginForm.$invalid">Login</button>
+  </form>
+
+  <script>
+    var app = angular.module("loginApp", []);
+    app.controller("loginController", function ($scope) {
+      $scope.attempts = 0;
+      $scope.login = function () {
+        if ($scope.username == "ram" && $scope.password == "ram") {
+          alert("Login successful");
+        }
+        if ($scope.attempts >= 3) {
+          alert("Too many failed attempts. Your account is locked.");
+        }
+        else {
+          $scope.attempts++;
+          alert(
+            "Login failed. Invalid username or password. Attempts left: " +
+            (3 - $scope.attempts)
+          );
+        }
+      };
+    });
+  </script>
+</body>
+
 </html>
