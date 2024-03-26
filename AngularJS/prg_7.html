@@ -14,7 +14,7 @@
       <br />
       <br />
       Age:
-      <input type="number" ng-model="age" required />
+      <input type="number" ng-model="age" required/>
       <br />
       <br />
       <button type="submit" ng-disabled="userForm.$invalid">Add User</button>
@@ -34,8 +34,8 @@
           <td>{{ user.name }}</td>
           <td>{{ user.age }}</td>
           <td>
-            <button ng-click="editUser(user)">Edit</button>
-            <button ng-click="deleteUser(user)">Delete</button>
+            <button ng-click="editUser(user, $index)">Edit</button>
+            <button ng-click="deleteUser($index)">Delete</button>
           </td>
         </tr>
       </tbody>
@@ -53,8 +53,7 @@
           $scope.name = "";
           $scope.age = "";
         };
-        $scope.editUser = function (user) {
-          var index = $scope.users.indexOf(user);
+        $scope.editUser = function (user, index) {
           var updatedName = prompt("Enter updated name:", user.name);
           var updatedAge = prompt("Enter updated age:", user.age);
           if (updatedName && updatedAge) {
@@ -62,8 +61,7 @@
             $scope.users.splice(index, 1, updatedUser);
           }
         };
-        $scope.deleteUser = function (user) {
-          var index = $scope.users.indexOf(user);
+        $scope.deleteUser = function (index) {
           $scope.users.splice(index, 1);
         };
       });
