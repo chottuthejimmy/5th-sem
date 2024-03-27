@@ -25,7 +25,11 @@
   <script>
     var app = angular.module("studentApp", []);
     app.controller("studentController", function ($scope) {
-      $scope.students = [];
+      $scope.students = [
+        { name: "Raj", cgpa: 8.5 },
+        { name: "Ram", cgpa: 9.0 },
+        { name: "Sam", cgpa: 8.0 }
+      ];
 
       $scope.addStudent = function () {
         if ($scope.name && $scope.cgpa) {
