@@ -57,7 +57,7 @@
           var updatedName = prompt("Enter updated name:", user.name);
           var updatedAge = prompt("Enter updated age:", user.age);
           if (updatedName && updatedAge) {
-            var updatedUser = { name: updatedName, age: parseInt(updatedAge) };
+            var updatedUser = { name: updatedName, age: updatedAge };
             $scope.users.splice(index, 1, updatedUser);
           }
         };
